@@ -2,7 +2,7 @@
 # This file intentionally contains vulnerabilities for testing
 
 import os
-
+import pickle
 
 def run_user_command():
     user_input = input("Enter a command: ")
