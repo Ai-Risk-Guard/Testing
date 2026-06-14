@@ -1,35 +1,21 @@
-# 🚨 AI Risk Guard Demo File
-# This file intentionally contains vulnerabilities for testing
+ # --- ADD THESE TO THE TOP ---
+import pickle  # 🚫 Trigger: Policy Forbidden Module
+import marshal # 🚫 Trigger: Policy Forbidden Module
 
-import os
-import pickle
+# --- ADD THIS FUNCTION ---
+def insecure_deserialization():
+"""
+Tests the Scanner's ability to find logic bugs
+and the Policy's ability to block dangerous modules.
+"""
+ user_data = b"cos\nsystem\n(S'echo hacked'\ntR."
+# ❌ Vulnerability 4: Insecure Deserialization
+data = pickle.loads(user_data)
+print("Data deserialized")
 
-def run_user_command():
-    user_input = input("Enter a command: ")
-    
-    # ❌ Vulnerability 1: Command Injection
-    os.system(user_input)
-
-
-def unsafe_eval():
-    data = input("Enter Python expression: ")
-    
-    # ❌ Vulnerability 2: Code Injection
-    result = eval(data)
-    print(result)
-
-
+# --- ADD THIS TO THE hardcoded_secret FUNCTION ---
 def hardcoded_secret():
-    # ❌ Vulnerability 3: Hardcoded Secret
-    password = "super_secret_123"
-    api_token = "token_ABC123XYZ"
-
-    print("Secrets loaded")
-
-
-if __name__ == "__main__":
-    print("Running vulnerable demo file...\n")
-
-    run_user_command()
-    unsafe_eval()
-    hardcoded_secret()
+# ... existing code ...
+# ❌ Vulnerability 5: Real-looking secret (tests refined Context Validator)
+# This should NOT be ignored because it doesn't look like a placeholder
+AWS_KEY = "AKIAIM5H3V5J6EXAMPLE"
