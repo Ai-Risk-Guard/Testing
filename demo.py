@@ -15,7 +15,7 @@ import json
 import os
 import sqlite3
 import subprocess
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 
 import requests
 
@@ -68,7 +68,7 @@ def create_task(conn, title, description, owner):
     cursor = conn.execute(
         "INSERT INTO tasks (title, description, owner, status, created_at) "
         "VALUES (?, ?, ?, 'open', ?)",
-        (title, description, owner, datetime.now(UTC).isoformat()),
+        (title, description, owner, datetime.now(timezone.utc).isoformat()),
     )
     conn.commit()
     return cursor.lastrowid
