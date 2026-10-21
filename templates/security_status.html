@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Security Lab Information | AUREX</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 24px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #101827;
+            color: #e8eef8;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 700px;
+        }
+
+        .card {
+            padding: 30px;
+            border-radius: 14px;
+            border: 1px solid #2b3a51;
+            background: #182337;
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        .subtitle {
+            color: #9eabc0;
+            line-height: 1.7;
+        }
+
+        .item {
+            margin-top: 20px;
+            padding: 18px;
+            border-radius: 9px;
+            background: #111c2c;
+            border: 1px solid #2b3a51;
+        }
+
+        .item h3 {
+            margin-top: 0;
+        }
+
+        .item p {
+            margin-bottom: 0;
+            color: #b4c1d5;
+            line-height: 1.6;
+        }
+
+        .warning {
+            border-color: #67552b;
+            background: #332b19;
+        }
+
+        .warning h3 {
+            color: #f7d994;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 24px;
+            color: #91b9ff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>AUREX Vulnerability Lab</h1>
+
+        <p class="subtitle">
+            This environment is designed to demonstrate application
+            security testing using a fictional banking application.
+        </p>
+
+        <div class="item warning">
+
+            <h3>Intentionally Vulnerable Authentication</h3>
+
+            <p>
+                The initial version constructs its login SQL query by
+                combining SQL syntax with user-supplied input.
+                This is an intentional SQL injection vulnerability.
+            </p>
+
+        </div>
+
+        <div class="item">
+
+            <h3>Hardcoded Demonstration Secret</h3>
+
+            <p>
+                The application configuration contains a synthetic
+                hardcoded value intended for security-scanner evaluation.
+                It is not a real credential or a functioning API key.
+            </p>
+
+        </div>
+
+        <div class="item">
+
+            <h3>Fictional Data</h3>
+
+            <p>
+                All account names, balances, account numbers, and
+                transactions are created for this local demonstration.
+                No real banking service is connected.
+            </p>
+
+        </div>
+
+        <div class="item">
+
+            <h3>Testing Objective</h3>
+
+            <p>
+                Identify the vulnerable code, apply an appropriate fix,
+                and repeat the same regression tests to verify that the
+                original behavior is no longer possible.
+            </p>
+
+        </div>
+
+        <a href="{{ url_for('index') }}">
+            Return to Login
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

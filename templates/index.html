@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Secure Banking Portal | AUREX Lab</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: #101827;
+            color: #e8eef8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 430px;
+        }
+
+        .brand {
+            text-align: center;
+            margin-bottom: 26px;
+        }
+
+        .brand h1 {
+            margin-bottom: 8px;
+            font-size: 30px;
+            letter-spacing: 1px;
+        }
+
+        .brand p {
+            color: #9eabc0;
+            font-size: 14px;
+        }
+
+        .card {
+            padding: 30px;
+            border-radius: 16px;
+            background: #182337;
+            border: 1px solid #2b3a51;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            margin-top: 0;
+            margin-bottom: 25px;
+            color: #9eabc0;
+            font-size: 14px;
+        }
+
+        label {
+            display: block;
+            margin: 16px 0 8px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border-radius: 8px;
+            border: 1px solid #3b4b63;
+            background: #101827;
+            color: #ffffff;
+            font-size: 15px;
+        }
+
+        input:focus {
+            outline: 2px solid #5c9dff;
+            border-color: transparent;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 24px;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #3478f6;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #2563d9;
+        }
+
+        .message {
+            padding: 12px;
+            margin-bottom: 14px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .message.error {
+            background: #49242a;
+            color: #ffc6cd;
+        }
+
+        .message.success {
+            background: #173c32;
+            color: #a8f0d5;
+        }
+
+        .demo-box {
+            margin-top: 22px;
+            padding: 14px;
+            background: #111c2c;
+            border: 1px solid #2b3a51;
+            border-radius: 8px;
+            color: #b4c1d5;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .demo-box strong {
+            color: #ffffff;
+        }
+
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #7f8da4;
+            font-size: 12px;
+        }
+
+        .status-link {
+            display: block;
+            margin-top: 18px;
+            text-align: center;
+            color: #91b9ff;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .status-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="brand">
+        <h1>Secure Banking Portal</h1>
+        <p>AUREX Security Demonstration Environment</p>
+    </div>
+
+    <div class="card">
+
+        <h2>Welcome back</h2>
+
+        <p class="subtitle">
+            Sign in to access your demonstration account.
+        </p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="message {{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form
+            action="{{ url_for('login') }}"
+            method="POST"
+        >
+
+            <label for="username">
+                Username
+            </label>
+
+            <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Enter username"
+                autocomplete="off"
+                required
+            >
+
+            <label for="password">
+                Password
+            </label>
+
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter password"
+                required
+            >
+
+            <button type="submit">
+                Sign In
+            </button>
+
+        </form>
+
+        <div class="demo-box">
+            <strong>Local demonstration only</strong><br>
+
+            All accounts and balances are fictional.
+            Do not enter real banking credentials.
+        </div>
+
+    </div>
+
+    <a
+        class="status-link"
+        href="{{ url_for('security_status') }}"
+    >
+        View Lab Information
+    </a>
+
+    <div class="footer">
+        AUREX Vulnerability Lab · Local Testing Environment
+    </div>
+
+</div>
+
+</body>
+</html>
