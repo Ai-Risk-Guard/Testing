@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Search Results — AUREX Vulnerability Lab</title>
+  <style>
+    body { max-width: 860px; margin: 48px auto; padding: 0 20px; font: 16px/1.6 Arial, sans-serif; color: #171717; }
+    table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+    th, td { border: 1px solid #999; padding: 10px; text-align: left; }
+    th { background: #f1f1f1; }
+    .notice { border: 1px solid #777; padding: 12px; }
+  </style>
+</head>
+<body>
+  <h1>Search Results</h1>
+  <p class="notice">Lab demonstration: this version intentionally uses unsafe SQL construction.</p>
+  {% if error %}
+    <p role="alert">{{ error }}</p>
+  {% elif not username %}
+    <p>No search term was provided.</p>
+  {% elif results %}
+    <p>Returned {{ results|length }} record(s).</p>
+    <table>
+      <thead>
+        <tr><th>ID</th><th>Username</th><th>Full name</th><th>Email</th></tr>
+      </thead>
+      <tbody>
+      {% for user in results %}
+        <tr>
+          <td>{{ user["id"] }}</td>
+          <td>{{ user["username"] }}</td>
+          <td>{{ user["full_name"] }}</td>
+          <td>{{ user["email"] }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No matching records found.</p>
+  {% endif %}
+  <p><a href="/">Return to search</a></p>
+</body>
+</html>

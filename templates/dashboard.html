@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Account Dashboard | AUREX Lab</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #101827;
+            color: #e8eef8;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            padding: 22px 6%;
+            background: #182337;
+            border-bottom: 1px solid #2b3a51;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 21px;
+        }
+
+        header span {
+            color: #9eabc0;
+            font-size: 12px;
+        }
+
+        .logout-form {
+            margin: 0;
+        }
+
+        .logout-button {
+            padding: 10px 16px;
+            border: 1px solid #42516a;
+            border-radius: 7px;
+            color: #ffffff;
+            background: #26354c;
+            cursor: pointer;
+        }
+
+        .logout-button:hover {
+            background: #354760;
+        }
+
+        main {
+            width: 90%;
+            max-width: 1050px;
+            margin: 40px auto;
+        }
+
+        .welcome {
+            margin-bottom: 30px;
+        }
+
+        .welcome h2 {
+            margin-bottom: 8px;
+            font-size: 29px;
+        }
+
+        .welcome p {
+            color: #9eabc0;
+        }
+
+        .banner {
+            margin-bottom: 24px;
+            padding: 14px 18px;
+            border: 1px solid #67552b;
+            border-radius: 10px;
+            background: #332b19;
+            color: #f7d994;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        .account-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .card {
+            padding: 24px;
+            background: #182337;
+            border: 1px solid #2b3a51;
+            border-radius: 13px;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: #9eabc0;
+            font-size: 14px;
+            font-weight: normal;
+        }
+
+        .value {
+            margin-top: 15px;
+            font-size: 25px;
+            font-weight: bold;
+            overflow-wrap: anywhere;
+        }
+
+        .balance {
+            color: #85e0b4;
+        }
+
+        .section {
+            margin-top: 30px;
+            padding: 24px;
+            background: #182337;
+            border: 1px solid #2b3a51;
+            border-radius: 13px;
+        }
+
+        .section h2 {
+            margin-top: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 14px 10px;
+            text-align: left;
+            border-bottom: 1px solid #2b3a51;
+            font-size: 14px;
+        }
+
+        th {
+            color: #9eabc0;
+            font-weight: normal;
+        }
+
+        .credit {
+            color: #85e0b4;
+        }
+
+        .debit {
+            color: #ffaaaa;
+        }
+
+        .empty {
+            color: #9eabc0;
+        }
+
+        .footer {
+            padding: 30px;
+            text-align: center;
+            color: #7f8da4;
+            font-size: 12px;
+        }
+
+        @media (max-width: 700px) {
+            header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .account-grid {
+                grid-template-columns: 1fr;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            th,
+            td {
+                padding: 10px 5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <div>
+        <h1>Secure Banking Portal</h1>
+        <span>AUREX Vulnerability Lab</span>
+    </div>
+
+    <form
+        class="logout-form"
+        action="{{ url_for('logout') }}"
+        method="POST"
+    >
+        <button
+            class="logout-button"
+            type="submit"
+        >
+            Log Out
+        </button>
+    </form>
+
+</header>
+
+<main>
+
+    <div class="welcome">
+        <h2>
+            Welcome, {{ user["full_name"] }}
+        </h2>
+
+        <p>
+            Your demonstration account overview.
+        </p>
+    </div>
+
+    <div class="banner">
+        <strong>Educational environment:</strong>
+        All account information shown here is fictional.
+        This dashboard is part of a controlled application-security test.
+    </div>
+
+    <div class="account-grid">
+
+        <div class="card">
+            <h3>Account Holder</h3>
+
+            <div class="value">
+                {{ user["full_name"] }}
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Account Number</h3>
+
+            <div class="value">
+                {{ user["account_number"] }}
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Available Balance</h3>
+
+            <div class="value balance">
+                ${{ "%.2f"|format(user["balance"]) }}
+            </div>
+        </div>
+
+    </div>
+
+    <div class="section">
+
+        <h2>Recent Transactions</h2>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for transaction in transactions %}
+
+                    <tr>
+                        <td>
+                            {{ transaction["description"] }}
+                        </td>
+
+                        <td
+                            class="{{
+                                'credit'
+                                if transaction['transaction_type'] == 'CREDIT'
+                                else 'debit'
+                            }}"
+                        >
+                            {{ transaction["transaction_type"] }}
+                        </td>
+
+                        <td>
+                            ${{ "%.2f"|format(transaction["amount"]) }}
+                        </td>
+                    </tr>
+
+                {% else %}
+
+                    <tr>
+                        <td
+                            colspan="3"
+                            class="empty"
+                        >
+                            No transactions available.
+                        </td>
+                    </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <div class="section">
+
+        <h2>Application Security Demonstration</h2>
+
+        <p>
+            This application is being used to demonstrate how a vulnerable
+            authentication query can affect access control.
+        </p>
+
+        <p>
+            The intended security improvement is to use parameterized SQL
+            queries and ensure that authentication succeeds only when the
+            supplied credentials are valid.
+        </p>
+
+    </div>
+
+</main>
+
+<div class="footer">
+    AUREX · Local Vulnerability Lab · Fictional Data Only
+</div>
+
+</body>
+</html>
