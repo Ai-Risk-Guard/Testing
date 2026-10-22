@@ -116,15 +116,15 @@ def create_app(test_config=None):
             query = (
                 "SELECT id, username, full_name "
                 "FROM users "
-                #f"WHERE username = '{username}' "
-                "WHERE username = ? "
-                #f"AND password = '{password}' "
-                "AND password = ? "
+                f"WHERE username = '{username}' "
+                #"WHERE username = ? "
+                f"AND password = '{password}' "
+                #"AND password = ? "
                 "LIMIT 1"
             )
 
-            #rows = connection.execute(query).fetchall()
-            rows = connection.execute(query, (username, password)).fetchall()
+            rows = connection.execute(query).fetchall()
+            #rows = connection.execute(query, (username, password)).fetchall()
 
             app.logger.warning(
                 "[SQL INJECTION LAB] Matching accounts: %s",
